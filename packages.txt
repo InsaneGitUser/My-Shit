@@ -9,7 +9,6 @@ grub
 iw
 iwd
 konsole
-libxcb-cursor
 linux
 linux-firmware
 nano
@@ -24,6 +23,7 @@ steam
 sudo
 wget
 wine
+xcb-util-cursor
 xf86-video-vesa
 xorg-bdftopcf
 xorg-docs
