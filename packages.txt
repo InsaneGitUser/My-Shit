@@ -9,6 +9,7 @@ grub
 iw
 iwd
 konsole
+libxcb-cursor
 linux
 linux-firmware
 nano
