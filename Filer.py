@@ -125,8 +125,8 @@ def start_server(directory, log_callback, status_callback):
 
     handler = make_handler(log_callback)
     try:
-        server_instance = socketserver.TCPServer(("", PORT), handler)
-        server_instance.allow_reuse_address = True
+        socketserver.TCPServer.allow_reuse_address = True
+        server_instance = socketserver.ThreadingTCPServer(("", PORT), handler)
     except OSError as e:
         status_callback("error", f"Port {PORT} in use: {e}")
         delete_xml()
