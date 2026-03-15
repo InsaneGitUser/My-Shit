@@ -58,6 +58,46 @@ def delete_xml():
 
 def make_handler(log_callback):
     class LoggingHandler(http.server.SimpleHTTPRequestHandler):
+        def send_head(self):
+            # Add Accept-Ranges so Roku can seek in video files
+            path = self.translate_path(self.path)
+            if os.path.isdir(path):
+                return super().send_head()
+            try:
+                f = open(path, "rb")
+            except OSError:
+                self.send_error(404, "File not found")
+                return None
+            import mimetypes
+            file_size = os.fstat(f.fileno()).st_size
+            ctype = mimetypes.guess_type(path)[0] or "application/octet-stream"
+
+            range_header = self.headers.get("Range")
+            if range_header:
+                try:
+                    ranges = range_header.strip().replace("bytes=", "").split("-")
+                    start = int(ranges[0]) if ranges[0] else 0
+                    end = int(ranges[1]) if ranges[1] else file_size - 1
+                    end = min(end, file_size - 1)
+                    length = end - start + 1
+                    f.seek(start)
+                    self.send_response(206)
+                    self.send_header("Content-Type", ctype)
+                    self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
+                    self.send_header("Content-Length", str(length))
+                    self.send_header("Accept-Ranges", "bytes")
+                    self.end_headers()
+                    return f
+                except Exception:
+                    pass
+
+            self.send_response(200)
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(file_size))
+            self.send_header("Accept-Ranges", "bytes")
+            self.end_headers()
+            return f
+
         def log_message(self, format, *args):
             client_ip = self.client_address[0]
             path      = self.path
@@ -96,7 +136,7 @@ def start_server(directory, log_callback, status_callback):
     server_thread.start()
 
     local_ip = get_local_ip()
-    status_callback("running", f"Serving on  {local_ip}")
+    status_callback("running", f"Serving on  {local_ip}:{PORT}")
     log_callback(f"[{datetime.now().strftime('%H:%M:%S')}]  ✅  Server started — {base_dir}")
 
 def stop_server(log_callback, status_callback):
