@@ -69,7 +69,7 @@ xorg-xrefresh
 xorg-xset
 xorg-xsetroot
 xorg-xvinfo
-xorg-xwayland
+plasma-x11
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
