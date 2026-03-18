@@ -1,4 +1,3 @@
-archiso
 base
 base-devel
 chromium
