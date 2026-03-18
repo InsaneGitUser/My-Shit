@@ -16,6 +16,7 @@ network-manager-applet
 networkmanager
 plasma-desktop
 plasma-nm
+plasma-x11-session
 polkit-gnome
 qt5-svg
 sddm
