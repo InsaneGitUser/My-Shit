@@ -69,7 +69,6 @@ xorg-xrefresh
 xorg-xset
 xorg-xsetroot
 xorg-xvinfo
-plasma-x11
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
