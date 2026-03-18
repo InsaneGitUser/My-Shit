@@ -16,6 +16,7 @@ network-manager-applet
 networkmanager
 plasma-desktop
 plasma-nm
+plasma-x11-session
 polkit-gnome
 qt5-svg
 sddm
@@ -23,6 +24,7 @@ steam
 sudo
 wget
 wine
+xcb-util-cursor
 xf86-video-vesa
 xorg-bdftopcf
 xorg-docs
@@ -68,7 +70,6 @@ xorg-xrefresh
 xorg-xset
 xorg-xsetroot
 xorg-xvinfo
-xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
